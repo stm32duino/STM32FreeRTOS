@@ -33,3 +33,15 @@ By default, the `heap_3.c` is used. It can be changed thanks a define in the con
 * STM32FreeRTOS.h : Must always be #include first. It references required include files.
 * STM32FreeRTOSConfig.h : If exist at sketch level, it contains the FreeRTOS configurations.
 * FreeRTOSConfig_Default.h : Contains the default FreeRTOS configurations for this STM32 port if `STM32FreeRTOSConfig.h` doesn't exist.
+
+## Test results (using [Arduino_Core_STM32](https://github.com/stm32duino/Arduino_Core_STM32))
+| Board | AnalogRead_DigitalRead | Blink_AnalogRead | frBlink | frBlinkPrint | frJitter | frLiuLayland |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: |
+| [Nucleo F091RC](http://www.st.com/en/evaluation-tools/nucleo-f091rc.html) | PASSED | PASSED | PASSED | PASSED | PASSED | FAILED |
+| [Nucleo F103RB](http://www.st.com/en/evaluation-tools/nucleo-f103rb.html) | PASSED | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo F303RE](http://www.st.com/en/evaluation-tools/nucleo-f303re.html) | PASSED | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo F429ZI](http://www.st.com/en/evaluation-tools/nucleo-f429zi.html) | PASSED | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [STM32F746G-DISCOVERY](http://www.st.com/en/evaluation-tools/32f746gdiscovery.html) | PASSED | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo L053R8](http://www.st.com/en/evaluation-tools/nucleo-l053r8.html) | PASSED | PASSED | PASSED | PASSED | PASSED | FAILED |
+| [Nucleo L152RE](http://www.st.com/en/evaluation-tools/nucleo-l152re.html) | PASSED | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [B-L475E-IOT01A](http://www.st.com/en/evaluation-tools/b-l475e-iot01a.html) | PASSED | PASSED | PASSED | PASSED | PASSED | PASSED |
