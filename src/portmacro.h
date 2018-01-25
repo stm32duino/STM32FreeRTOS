@@ -6,7 +6,7 @@
 
 #ifndef _PORTMACRO_H_
 #define _PORTMACRO_H_
-#include "stm32_def.h"
+#include <Arduino.h>
 
 #ifndef __CORTEX_M
 #pragma GCC error  "no \"__CORTEX_M\" definition"
