@@ -11,7 +11,7 @@
  * \param[in] millis milliseconds to delay
  */
 static void delayMS(uint32_t millis) {
-  uint32_t iterations = millis * (SystemCoreClock/7000);
+  uint32_t iterations = millis * (F_CPU/7000);
   uint32_t i;
   for(i = 0; i < iterations; ++i) {
     __asm__("nop\n\t");

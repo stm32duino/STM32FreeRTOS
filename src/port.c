@@ -3,7 +3,7 @@
  * @author  Frederic Pillon <frederic.pillon@st.com> for STMicroelectronics.
  * @brief   Include source of FreeRTOS portable layer file to match Arduino library format
  */
-#include "stm32_def.h"
+#include <Arduino.h>
 
 #ifndef __CORTEX_M
 #pragma GCC error  "no \"__CORTEX_M\" definition"
