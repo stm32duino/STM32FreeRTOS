@@ -93,6 +93,9 @@
  #include <stdint.h>
  extern uint32_t SystemCoreClock;
 #endif
+extern char _end; /* Defined in the linker script */
+extern char _estack; /* Defined in the linker script */
+extern char _Min_Stack_Size; /* Defined in the linker script */
 
 #define configUSE_PREEMPTION              1
 #define configUSE_IDLE_HOOK               1
@@ -100,8 +103,13 @@
 #define configCPU_CLOCK_HZ                (SystemCoreClock)
 #define configTICK_RATE_HZ                ((TickType_t)1000)
 #define configMAX_PRIORITIES              (7)
-#define configMINIMAL_STACK_SIZE          ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE             ((size_t)(15 * 1024))
+/*
+ * _Min_Stack_Size is often set to 0x400 in the linker script
+ * Use it divided by 8 to set minmimal stack size of a task to 128 by default.
+ * End user will have to properly configure those value depending to their needs.
+ */
+#define configMINIMAL_STACK_SIZE          ((uint16_t)((uint32_t)&_Min_Stack_Size/8))
+#define configTOTAL_HEAP_SIZE             ((size_t)(&_estack - _Min_Stack_Size - &_end))
 #define configMAX_TASK_NAME_LEN           (16)
 #define configUSE_TRACE_FACILITY          1
 #define configUSE_16_BIT_TICKS            0
