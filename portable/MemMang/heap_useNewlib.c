@@ -72,12 +72,15 @@
     static int totalBytesProvidedBySBRK = 0;
 #endif
 extern char _end;  // Defined in the linker script
-static int heapBytesRemaining = configTOTAL_HEAP_SIZE; // that's (&__HeapLimit)-(&__HeapBase)
+static int heapBytesRemaining = -1; // configTOTAL_HEAP_SIZE is not constant will be init later
 
 //! sbrk/_sbrk version supporting reentrant newlib (depends upon above symbols defined by linker control file).
 char * sbrk(int incr) {
     static char *currentHeapEnd = &_end;
     vTaskSuspendAll(); // Note: safe to use before FreeRTOS scheduler started
+    if (heapBytesRemaining == -1) {
+      heapBytesRemaining = configTOTAL_HEAP_SIZE;
+    }
     char *previousHeapEnd = currentHeapEnd;
     if (currentHeapEnd + incr > &_end + configTOTAL_HEAP_SIZE) {
         #if( configUSE_MALLOC_FAILED_HOOK == 1 )
@@ -145,6 +148,9 @@ void vPortFree( void *pv ) PRIVILEGED_FUNCTION {
 
 size_t xPortGetFreeHeapSize( void ) PRIVILEGED_FUNCTION {
     struct mallinfo mi = mallinfo();
+    if (heapBytesRemaining == -1) {
+        heapBytesRemaining = configTOTAL_HEAP_SIZE;
+    }
     return mi.fordblks + heapBytesRemaining;
 }
 
