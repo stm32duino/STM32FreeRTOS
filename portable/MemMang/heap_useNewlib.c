@@ -57,7 +57,7 @@
   #warning "This wrapper was verified for newlib version 2.5.0; please ensure newlib's external requirements for malloc-family are unchanged!"
 #endif
 
-#include "freeRTOS.h" // defines public interface we're implementing here
+#include "FreeRTOS.h" // defines public interface we're implementing here
 #if !defined(configUSE_NEWLIB_REENTRANT) ||  (configUSE_NEWLIB_REENTRANT!=1)
   #warning "#define configUSE_NEWLIB_REENTRANT 1 // Required for thread-safety of newlib sprintf, strtok, etc..."
   // If you're *really* sure you don't need FreeRTOS's newlib reentrancy support, remove this warning...
@@ -71,15 +71,15 @@
 #ifndef NDEBUG
     static int totalBytesProvidedBySBRK = 0;
 #endif
-extern char __HeapBase, __HeapLimit, HEAP_SIZE;  // make sure to define these symbols in linker command file
-static int heapBytesRemaining = (int)&HEAP_SIZE; // that's (&__HeapLimit)-(&__HeapBase)
+extern char _end;  // Defined in the linker script
+static int heapBytesRemaining = configTOTAL_HEAP_SIZE; // that's (&__HeapLimit)-(&__HeapBase)
 
 //! sbrk/_sbrk version supporting reentrant newlib (depends upon above symbols defined by linker control file).
 char * sbrk(int incr) {
-    static char *currentHeapEnd = &__HeapBase;
+    static char *currentHeapEnd = &_end;
     vTaskSuspendAll(); // Note: safe to use before FreeRTOS scheduler started
     char *previousHeapEnd = currentHeapEnd;
-    if (currentHeapEnd + incr > &__HeapLimit) {
+    if (currentHeapEnd + incr > &_end + configTOTAL_HEAP_SIZE) {
         #if( configUSE_MALLOC_FAILED_HOOK == 1 )
         {
             extern void vApplicationMallocFailedHook( void );
