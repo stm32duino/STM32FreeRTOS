@@ -84,7 +84,11 @@
  *----------------------------------------------------------*/
 
 /* Begin custom definitions for STM32 */
-/* Default (3) Memory allocation implementations (heap_[1-5].c) */
+/* Define memory allocation implementations to use:
+ * 1 to 5 for heap_[1-5].c
+ * -1 for heap_useNewlib.c
+ * Default -1 see heap.c
+ */
 /*#define configMEMMANG_HEAP_NB             3*/
 /* End custom definitions for STM32 */
 
