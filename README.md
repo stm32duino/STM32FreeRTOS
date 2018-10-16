@@ -18,10 +18,17 @@ This library provides a default FreeRTOS configuration file named `FreeRTOSConfi
 User can provide his own FreeRTOS configuration file at sketch level by adding his configuration in a file named `STM32FreeRTOSConfig.h`.
 
 Heap allocation schemes are provided by FreeRTOS, see [Memory allocation implementations included in the RTOS source](https://www.freertos.org/a00111.html).
-By default, the `heap_3.c` is used. It can be changed thanks a define in the configuration file:
+To extend those schemes a thread-safe heap allocation using C runtime (Newlib) has been added based on Dave Nadler work:
+
+    http://www.nadler.com/embedded/newlibAndFreeRTOS.html
+    
+By default, the `heap_useNewlib.c` is used. It can be changed thanks a define in the configuration file:
 ```
-/* Default (3) Memory allocation implementations (heap_[1-5].c) */
-/*#define configMEMMANG_HEAP_NB             3*/
+/* Define memory allocation implementations to use:
+ * 1 to 5 for heap_[1-5].c
+ * -1 for heap_useNewlib.c
+ * Default -1 see heap.c
+ */
 ```
 
 ## Limitations
