@@ -20,7 +20,7 @@ User can provide his own FreeRTOS configuration file at sketch level by adding h
 Heap allocation schemes are provided by FreeRTOS, see [Memory allocation implementations included in the RTOS source](https://www.freertos.org/a00111.html).
 To extend those schemes a thread-safe heap allocation using C runtime (Newlib) has been added based on Dave Nadler work:
 
-    http://www.nadler.com/embedded/newlibAndFreeRTOS.html
+http://www.nadler.com/embedded/newlibAndFreeRTOS.html
     
 By default, the `heap_useNewlib.c` is used. It can be changed thanks a define in the configuration file:
 ```
