@@ -127,7 +127,7 @@ void *__wrap_malloc(size_t nbytes) {
     void *p = __real_malloc(nbytes); // Solely for debug breakpoint...
     return p;
 };
-void *__wrap__malloc_r(void *reent, size_t nbytes) {
+void *__wrap__malloc_r(void *reent __attribute__((__unused__)), size_t nbytes) {
     extern void * __real__malloc_r(size_t nbytes);
     void *p = __real__malloc_r(nbytes); // Solely for debug breakpoint...
     return p;
