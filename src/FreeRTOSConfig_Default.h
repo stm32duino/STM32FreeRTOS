@@ -126,6 +126,18 @@ extern char _Min_Stack_Size; /* Defined in the linker script */
 #define configUSE_APPLICATION_TASK_TAG    0
 #define configUSE_COUNTING_SEMAPHORES     1
 #define configGENERATE_RUN_TIME_STATS     0
+/*
+ * If configUSE_NEWLIB_REENTRANT is set to 1 then a newlib reent structure
+ * will be allocated for each created task.
+ *
+ * Note Newlib support has been included by popular demand, but is not used
+ * by the FreeRTOS maintainers themselves. FreeRTOS is not responsible for
+ * resulting newlib operation. User must be familiar with newlib and must
+ * provide system-wide implementations of the necessary stubs.
+ * Be warned that (at the time of writing) the current newlib design implements
+ * a system-wide malloc() that must be provided with locks.
+ */
+#define configUSE_NEWLIB_REENTRANT        1
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES           0
