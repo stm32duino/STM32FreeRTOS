@@ -48,6 +48,10 @@
  * Default -1 see heap.c
  */
 /*#define configMEMMANG_HEAP_NB             3*/
+
+/* configUSE_CMSIS_RTOS_V2 has to be defined and set to 1 to use CMSIS-RTOSv2 */
+/*#define configUSE_CMSIS_RTOS_V2           1*/
+
 /* End custom definitions for STM32 */
 
 /* Ensure stdint is only used by the compiler, and not the assembler. */
@@ -55,16 +59,37 @@
  #include <stdint.h>
  extern uint32_t SystemCoreClock;
 #endif
+
+#if defined(configUSE_CMSIS_RTOS_V2) && (configUSE_CMSIS_RTOS_V2 == 1)
+/*------------- CMSIS-RTOS V2 specific defines -----------*/
+/* When using CMSIS-RTOSv2 set configSUPPORT_STATIC_ALLOCATION to 1
+ * is mandatory to avoid compile errors.
+ * CMSIS-RTOS V2 implmentation requires the following defines
+ */
+/* cmsis_os threads are created using xTaskCreateStatic() API */
+#define configSUPPORT_STATIC_ALLOCATION   1
+/*  CMSIS-RTOSv2 defines 56 levels of priorities. To be able to use them
+ *  all and avoid application misbehavior, configUSE_PORT_OPTIMISED_TASK_SELECTION
+ *  must be set to 0 and configMAX_PRIORITIES to 56
+ *
+ */
+#define configMAX_PRIORITIES              (56)
+/*
+ * When set to 1, configMAX_PRIORITIES can't be more than 32
+ * which is not suitable for the new CMSIS-RTOS v2 priority range
+ */
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
+
+#define configMINIMAL_STACK_SIZE          ((uint16_t)128)
+#define configTOTAL_HEAP_SIZE             ((size_t)(15 * 1024))
+
+#else
 extern char _end; /* Defined in the linker script */
 extern char _estack; /* Defined in the linker script */
 extern char _Min_Stack_Size; /* Defined in the linker script */
 
-#define configUSE_PREEMPTION              1
-#define configUSE_IDLE_HOOK               1
-#define configUSE_TICK_HOOK               1
-#define configCPU_CLOCK_HZ                (SystemCoreClock)
-#define configTICK_RATE_HZ                ((TickType_t)1000)
 #define configMAX_PRIORITIES              (7)
+
 /*
  * _Min_Stack_Size is often set to 0x400 in the linker script
  * Use it divided by 8 to set minmimal stack size of a task to 128 by default.
@@ -72,6 +97,14 @@ extern char _Min_Stack_Size; /* Defined in the linker script */
  */
 #define configMINIMAL_STACK_SIZE          ((uint16_t)((uint32_t)&_Min_Stack_Size/8))
 #define configTOTAL_HEAP_SIZE             ((size_t)(&_estack - _Min_Stack_Size - &_end))
+
+#endif /* configUSE_CMSIS_RTOS_V2 */
+
+#define configUSE_PREEMPTION              1
+#define configUSE_IDLE_HOOK               1
+#define configUSE_TICK_HOOK               1
+#define configCPU_CLOCK_HZ                (SystemCoreClock)
+#define configTICK_RATE_HZ                ((TickType_t)1000)
 #define configMAX_TASK_NAME_LEN           (16)
 #define configUSE_TRACE_FACILITY          1
 #define configUSE_16_BIT_TICKS            0
@@ -154,9 +187,18 @@ header file. */
 #define vPortSVCHandler    SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
 
-/* IMPORTANT: This define MUST be commented when used with STM32Cube firmware,
-              to prevent overwriting SysTick_Handler defined within STM32Cube HAL */
+/*
+ * IMPORTANT:
+ * osSystickHandler is called in the core SysTick_Handler definition
+ * and is defined as weak.
+ * For CMSIS-RTOSv2: osSystickHandler is defined as xPortSysTickHandler
+ * For CMSIS-RTOS: osSystickHandler is defined by the cmsis_os and xPortSysTickHandler
+ * must not be defined to prevent overwriting SysTick_Handler
+ */
 /* #define xPortSysTickHandler SysTick_Handler */
+#if defined(configUSE_CMSIS_RTOS_V2) && (configUSE_CMSIS_RTOS_V2 == 1)
+#define xPortSysTickHandler osSystickHandler
+#endif
 
 #endif /* FREERTOS_CONFIG_H */
 

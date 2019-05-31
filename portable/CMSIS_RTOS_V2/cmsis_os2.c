@@ -118,6 +118,8 @@ static HeapRegion_t xHeapRegions[] = {
 /* FreeRTOS tick timer interrupt handler prototype */
 extern void xPortSysTickHandler (void);
 
+/* SysTick handler implementation done in the core and call osSystickHandler */
+#ifndef ARDUINO_ARCH_STM32
 /*
   SysTick handler implementation that also clears overflow flag.
 */
@@ -128,6 +130,7 @@ void SysTick_Handler (void) {
   /* Call tick handler */
   xPortSysTickHandler();
 }
+#endif
 #endif /* SysTick */
 
 /*---------------------------------------------------------------------------*/
