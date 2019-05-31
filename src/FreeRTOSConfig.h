@@ -11,6 +11,9 @@
 #if __has_include("STM32FreeRTOSConfig.h")
 #include "STM32FreeRTOSConfig.h"
 #else
+#if __has_include("STM32FreeRTOSConfig_extra.h")
+#include "STM32FreeRTOSConfig_extra.h"
+#endif
 #include "FreeRTOSConfig_Default.h"
 #endif
 
