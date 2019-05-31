@@ -14,5 +14,5 @@ used, but it is recommended to use the FreeRTOS ARM Cortex-M4F port located in
 the /FreeRTOS/Source/portable/GCC/ARM_CM4F directory.
 
 If the revision of the ARM Cortex-M7 core is r0p1 then use the FreeRTOS ARM
-Cortex-M7 r0p1 port located in the /FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1
+Cortex-M7 r0p1 port located in the /FreeRTOS/Source/portable/GCC/ARM_CM7_GCC/r0p1
 directory.
