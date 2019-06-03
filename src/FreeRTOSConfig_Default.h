@@ -1,70 +1,28 @@
 /*
-    FreeRTOS V9.0.0 - Copyright (C) 2016 Real Time Engineers Ltd.
-    All rights reserved
-
-    VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
-
-    This file is part of the FreeRTOS distribution.
-
-    FreeRTOS is free software; you can redistribute it and/or modify it under
-    the terms of the GNU General Public License (version 2) as published by the
-    Free Software Foundation >>>> AND MODIFIED BY <<<< the FreeRTOS exception.
-
-    ***************************************************************************
-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
-    >>!   obliged to provide the source code for proprietary components     !<<
-    >>!   outside of the FreeRTOS kernel.                                   !<<
-    ***************************************************************************
-
-    FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
-    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
-    link: http://www.freertos.org/a00114.html
-
-    ***************************************************************************
-     *                                                                       *
-     *    FreeRTOS provides completely free yet professionally developed,    *
-     *    robust, strictly quality controlled, supported, and cross          *
-     *    platform software that is more than just the market leader, it     *
-     *    is the industry's de facto standard.                               *
-     *                                                                       *
-     *    Help yourself get started quickly while simultaneously helping     *
-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
-     *    tutorial book, reference manual, or both:                          *
-     *    http://www.FreeRTOS.org/Documentation                              *
-     *                                                                       *
-    ***************************************************************************
-
-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
-    the FAQ page "My application does not run, what could be wrong?".  Have you
-    defined configASSERT()?
-
-    http://www.FreeRTOS.org/support - In return for receiving this top quality
-    embedded software for free we request you assist our global community by
-    participating in the support forum.
-
-    http://www.FreeRTOS.org/training - Investing in training allows your team to
-    be as productive as possible as early as possible.  Now you can receive
-    FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
-    Ltd, and the world's leading authority on the world's leading RTOS.
-
-    http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
-    including FreeRTOS+Trace - an indispensable productivity tool, a DOS
-    compatible FAT file system, and our tiny thread aware UDP/IP stack.
-
-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
-
-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
-    licenses offer ticketed support, indemnification and commercial middleware.
-
-    http://www.SafeRTOS.com - High Integrity Systems also provide a safety
-    engineered and independently SIL3 certified version for use in safety and
-    mission critical applications that require provable dependability.
-
-    1 tab == 4 spaces!
+ * FreeRTOS Kernel V10.0.1
+ * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
 */
 
 
@@ -77,10 +35,10 @@
  * These definitions should be adjusted for your particular hardware and
  * application requirements.
  *
- * THESE PARAMETERS ARE DESCRIBED WITHIN THE 'CONFIGURATION' SECTION OF THE
- * FreeRTOS API DOCUMENTATION AVAILABLE ON THE FreeRTOS.org WEB SITE.
+ * These parameters and more are described within the 'configuration' section of the
+ * FreeRTOS API documentation available on the FreeRTOS.org web site.
  *
- * See http://www.freertos.org/a00110.html.
+ * See http://www.freertos.org/a00110.html
  *----------------------------------------------------------*/
 
 /* Begin custom definitions for STM32 */
@@ -90,6 +48,10 @@
  * Default -1 see heap.c
  */
 /*#define configMEMMANG_HEAP_NB             3*/
+
+/* configUSE_CMSIS_RTOS_V2 has to be defined and set to 1 to use CMSIS-RTOSv2 */
+/*#define configUSE_CMSIS_RTOS_V2           1*/
+
 /* End custom definitions for STM32 */
 
 /* Ensure stdint is only used by the compiler, and not the assembler. */
@@ -97,16 +59,37 @@
  #include <stdint.h>
  extern uint32_t SystemCoreClock;
 #endif
+
+#if defined(configUSE_CMSIS_RTOS_V2) && (configUSE_CMSIS_RTOS_V2 == 1)
+/*------------- CMSIS-RTOS V2 specific defines -----------*/
+/* When using CMSIS-RTOSv2 set configSUPPORT_STATIC_ALLOCATION to 1
+ * is mandatory to avoid compile errors.
+ * CMSIS-RTOS V2 implmentation requires the following defines
+ */
+/* cmsis_os threads are created using xTaskCreateStatic() API */
+#define configSUPPORT_STATIC_ALLOCATION   1
+/*  CMSIS-RTOSv2 defines 56 levels of priorities. To be able to use them
+ *  all and avoid application misbehavior, configUSE_PORT_OPTIMISED_TASK_SELECTION
+ *  must be set to 0 and configMAX_PRIORITIES to 56
+ *
+ */
+#define configMAX_PRIORITIES              (56)
+/*
+ * When set to 1, configMAX_PRIORITIES can't be more than 32
+ * which is not suitable for the new CMSIS-RTOS v2 priority range
+ */
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
+
+#define configMINIMAL_STACK_SIZE          ((uint16_t)128)
+#define configTOTAL_HEAP_SIZE             ((size_t)(15 * 1024))
+
+#else
 extern char _end; /* Defined in the linker script */
 extern char _estack; /* Defined in the linker script */
 extern char _Min_Stack_Size; /* Defined in the linker script */
 
-#define configUSE_PREEMPTION              1
-#define configUSE_IDLE_HOOK               1
-#define configUSE_TICK_HOOK               1
-#define configCPU_CLOCK_HZ                (SystemCoreClock)
-#define configTICK_RATE_HZ                ((TickType_t)1000)
 #define configMAX_PRIORITIES              (7)
+
 /*
  * _Min_Stack_Size is often set to 0x400 in the linker script
  * Use it divided by 8 to set minmimal stack size of a task to 128 by default.
@@ -114,6 +97,14 @@ extern char _Min_Stack_Size; /* Defined in the linker script */
  */
 #define configMINIMAL_STACK_SIZE          ((uint16_t)((uint32_t)&_Min_Stack_Size/8))
 #define configTOTAL_HEAP_SIZE             ((size_t)(&_estack - _Min_Stack_Size - &_end))
+
+#endif /* configUSE_CMSIS_RTOS_V2 */
+
+#define configUSE_PREEMPTION              1
+#define configUSE_IDLE_HOOK               1
+#define configUSE_TICK_HOOK               1
+#define configCPU_CLOCK_HZ                (SystemCoreClock)
+#define configTICK_RATE_HZ                ((TickType_t)1000)
 #define configMAX_TASK_NAME_LEN           (16)
 #define configUSE_TRACE_FACILITY          1
 #define configUSE_16_BIT_TICKS            0
@@ -196,9 +187,18 @@ header file. */
 #define vPortSVCHandler    SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
 
-/* IMPORTANT: This define MUST be commented when used with STM32Cube firmware,
-              to prevent overwriting SysTick_Handler defined within STM32Cube HAL */
+/*
+ * IMPORTANT:
+ * osSystickHandler is called in the core SysTick_Handler definition
+ * and is defined as weak.
+ * For CMSIS-RTOSv2: osSystickHandler is defined as xPortSysTickHandler
+ * For CMSIS-RTOS: osSystickHandler is defined by the cmsis_os and xPortSysTickHandler
+ * must not be defined to prevent overwriting SysTick_Handler
+ */
 /* #define xPortSysTickHandler SysTick_Handler */
+#if defined(configUSE_CMSIS_RTOS_V2) && (configUSE_CMSIS_RTOS_V2 == 1)
+#define xPortSysTickHandler osSystickHandler
+#endif
 
 #endif /* FREERTOS_CONFIG_H */
 

@@ -2,69 +2,113 @@
   @verbatim
   ******************************************************************************
   *
-  *           Portions Copyright © 2016 STMicroelectronics International N.V. All rights reserved.
+  *           Portions Copyright © 2019 STMicroelectronics International N.V. All rights reserved.
   *           Portions Copyright (C) 2016 Real Time Engineers Ltd, All rights reserved
   *
-  * @file    st_readme.txt 
+  * @file    st_readme.txt
   * @author  MCD Application Team
   * @brief   This file lists the main modification done by STMicroelectronics on
   *          FreeRTOS for integration with STM32Cube solution.
-  *          For more details on FreeRTOS implementation on STM32Cube, please refer 
-  *          to UM1722 "Developing Applications on STM32Cube with FreeRTOS"  
+  *          For more details on FreeRTOS implementation on STM32Cube, please refer
+  *          to UM1722 "Developing Applications on STM32Cube with FreeRTOS"
   ******************************************************************************
   *
-  * Redistribution and use in source and binary forms, with or without 
-  * modification, are permitted, provided that the following conditions are met:
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
-  * 1. Redistribution of source code must retain the above copyright notice, 
-  *    this list of conditions and the following disclaimer.
-  * 2. Redistributions in binary form must reproduce the above copyright notice,
-  *    this list of conditions and the following disclaimer in the documentation
-  *    and/or other materials provided with the distribution.
-  * 3. Neither the name of STMicroelectronics nor the names of other 
-  *    contributors to this software may be used to endorse or promote products 
-  *    derived from this software without specific written permission.
-  * 4. This software, including modifications and/or derivative works of this 
-  *    software, must execute solely and exclusively on microcontroller or
-  *    microprocessor devices manufactured by or for STMicroelectronics.
-  * 5. Redistribution and use of this software other than as permitted under 
-  *    this license is void and will automatically terminate your rights under 
-  *    this license. 
-  *
-  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
-  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
-  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
-  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
-  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
-  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                       opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   @endverbatim
 
 =======
+
+### 29-Mars-2019 ###
+=========================
+  + cmsis_os.c : Fix bug in osPoolAlloc(): memory blocks can't be reused after being free'd
+  + Source/CMSIS_RTOS_V2/cmsis_os, Source/CMSIS_RTOS_V2/cmsis_os1.c, Source/CMSIS_RTOS_V2/cmsis_os2.c, Source/CMSIS_RTOS_V2/cmsis_os2.h: restore original Apache license terms
+  + st_readme.txt: update license terms to BSD-3-Clause
+
+
+### 13-August-2018 ###
+=========================
+  + Add empty implementation for the missing function osThreadGetStackSize()
+    to avoid link errors when using CMSIS-RTOS V2.
+
+  + Update the FreeRTOSConfig_template.h with specific defines for the
+    CMSIS-RTOS V2.
+
+  + Rename the "RTE_RTOS_FreeRTOS_XXXX" macros to "USE_FreeRTOS_XXXX" in
+    cmsis_os2.c.
+
+### 30-July-2018 ###
+=========================
+ + Update License.txt file to MIT license instead of GPLv2
+
+### 23-July-2018 ###
+=========================
+ + Fix compiler warnings thrown by IAR compiler 8.20
+
+ + Add MPU support for the CM7/r0p1:
+  - GCC/ARM_CM7_MPU/r0p1/port.c
+  - GCC/ARM_CM7_MPU/r0p1/portmacro.h
+  - IAR/ARM_CM7_MPU/r0p1/port.c
+  - IAR/ARM_CM7_MPU/r0p1/portasm.s
+  - IAR/ARM_CM7_MPU/r0p1/portmacro.h
+  - RVDS/ARM_CM7_MPU/r0p1/port.c
+  - RVDS/ARM_CM7_MPU/r0p1/portmacro.h
+
+### 09-April-2018 ###
+=========================
+  Update the FreeRTOS against the latest release 10.0.1
+  more details are available in: https://www.freertos.org/History.txt
+
+  + Integrate support for tickless mode for ARM_CM0 core:
+    - GCC/ARM_CM0/port.c
+    - GCC/ARM_CM0/portmacro.h
+    - IAR/ARM_CM0/port.c
+    - IAR/ARM_CM0/portmacro.h
+    - RVDS/ARM_CM0/port.c
+
+ Integrate CMSIS-RTOSv2 wrapper based on: https://github.com/ARM-software/CMSIS-FreeRTOS/releases/tag/10.0.1
+  + Add new files:
+    - CMSIS_RTOS_V2/cmsis_os.h
+    - CMSIS_RTOS_V2/cmsis_os1.c
+    - CMSIS_RTOS_V2/cmsis_os2.c
+    - CMSIS_RTOS_V2/cmsis_os2.h
+      "cmsis_os1.c" and "cmsis_os1.h" contains the reference implementation of
+       CMSIS-RTOSv1,i.e as released by ARM, using the CMSIS-RTOSV2 API.
+
+  + The ST customized CMSIS-RTOSv1 is maintained under:
+    - CMSIS_RTOS/cmsis_os.c
+    - CMSIS_RTOS/cmsis_os.h
+
+  + When using CMSIS-RTOSv2 APIs, the following FreeRTOS defines are required:
+    - #define configMAX_PRIORITIES                     56
+    - #define configSUPPORT_STATIC_ALLOCATION          0
+    - #define configUSE_PORT_OPTIMISED_TASK_SELECTION  0
+
+
 ### 10-August-2017 ###
 =========================
   Update FreeRTOS to support MPU feature with IAR compiler.
-  
+
   + Add the following ports:
     - IAR/ARM_CM4_MPU
     - IAR/ARM_CM7_MPU
     - RVDS/ARM_CM7_MPU
 
+
 ### 03-March-2017 ###
 =========================
   Update CMSIS-RTOS drivers to support both CMSIS Core V4.x and V5.x
-  
+
   Bug fixes:
   + CMSIS-RTOS: Wrong return value for osSignalWait()
-  + CMSIS-RTOS: Not all queue size is 0 initialized with osMailCAlloc() 
-  
+  + CMSIS-RTOS: Not all queue size is 0 initialized with osMailCAlloc()
+
   Limitation:
   + CMSIS-RTOS: osSignalWAit() function is not fully compliant with the specification
 
@@ -73,7 +117,7 @@
 =========================
   The purpose of this release is to Upgrade to use FreeRTOS V9.0.0, this version
   is a drop-in compatible replacement for FreeRTOS V8.2.3.
-  For more details please refer to http://www.freertos.org/History.txt 
+  For more details please refer to http://www.freertos.org/History.txt
 
   + Add support to tickless mode for MPU ports:
     - GCC/ARM_CM3_MPU/port.c
@@ -87,10 +131,10 @@
 
   + Fix compilation error in CM3_MPU and CM4_MPU ports:
     - GCC/ARM_CM3_MPU/portmacro.h
-    - GCC/ARM_CM4_MPU/portmacro.h 
+    - GCC/ARM_CM4_MPU/portmacro.h
     - RVDS/ARM_CM4_MPU/portmacro.h
     - Add "Source\portable\Common\" directory
-  
+
   + cmsis_os.c
     - Add support of Statically Allocated Systems introduced with FreeRTOS V9.0.0
     - Add new wrappers CMSIS-RTOS APIs
@@ -113,16 +157,16 @@
 =======================
   The purpose of this release is to Upgrade to use FreeRTOS V8.2.3.
   It also provides fixes for minor issues.
-  
+
   + cmsis_os.c
-    - Implementation of functions "osSignalSet" and "osSignalWait" are now delimited by 
+    - Implementation of functions "osSignalSet" and "osSignalWait" are now delimited by
          #define configUSE_TASK_NOTIFICATIONS.
     - Function "osTimerStart" : fix for an assert issue when called from an ISR.
     - Function "osMailCreate"  : internal variables initialization.
     - Function "osSignalWait" : signals value is now compared versus integer zero for error checking.
 
   + freeRTOS sources
-    - FreeRTOS.h file : Add configuration sanity check in case of configUSE_RECURSIVE_MUTEXES  set 
+    - FreeRTOS.h file : Add configuration sanity check in case of configUSE_RECURSIVE_MUTEXES  set
       and configUSE_MUTEXES  not set.
 
   + STMicroelectronics license simplifications, see license disclaimer within this file's header
@@ -132,26 +176,26 @@
 =====================
   The purpose of this release is to Upgrade to use FreeRTOS V8.2.1.
 
-  + Major change of the version 8.2.1 is the support of CM7 core. 
+  + Major change of the version 8.2.1 is the support of CM7 core.
   For STM32F746xx/STM32F756xx devices, need to use port files under Source/Portable/XXX/ARM_CM7/r0p1,
   where XXX refers to the compiler used.
 
   + It also provides implementation of osSignal management APIs, osSignalSet() and osSignalWait(),
   fixes osMassage queue size, osMailQDef macro and osDelayUntil parameters.
-  
-  + In this release an alignment has been done in ARM_CM4 and ARM_CM3 port.c versus ARM_CM0 port.c 
+
+  + In this release an alignment has been done in ARM_CM4 and ARM_CM3 port.c versus ARM_CM0 port.c
   regarding the use of macros configPRE_SLEEP_PROCESSING and configPOST_SLEEP_PROCESSING, these tow macros
-  are now taking as parameter as pointer to TickType_t.  
+  are now taking as parameter as pointer to TickType_t.
 
   + cmsis_os.c
     - Add implementation of osSignalSet() and osSignalWait() APIs
     - Fix massage queue size in osMessageCreate API
-    - osDelayUntil: parameter PreviousWakeTime is now passed as a pointer. 
+    - osDelayUntil: parameter PreviousWakeTime is now passed as a pointer.
     - Enabling Mail queue management APIs (temporary removed in previous version).
     - Function "osThreadGetPriority" uses now uxTaskPriorityGetFromISR if called from an interrupt handler, if not use uxTaskPriorityGet.
 
   + cmsis_os.h
-    - osFeature_Wait is defined to 0 to indicate that osWait function is not available (as specified by cmsis_os template by ARM)  
+    - osFeature_Wait is defined to 0 to indicate that osWait function is not available (as specified by cmsis_os template by ARM)
     - Fix compilation issue with osMailQDef macro.
     - Enabling Mail queue management APIs (temporary removed in previous version)
 
@@ -159,32 +203,32 @@
     - ARM_CM3 port.c and ARM_CM4 port.c:
       function vPortSuppressTicksAndSleep : configPRE_SLEEP_PROCESSING and configPOST_SLEEP_PROCESSING are now taking
       as parameter as pointer to TickType_t.
-      The purpose of this change is to align the CM3 and CM4 implementation with CM0 one.       
+      The purpose of this change is to align the CM3 and CM4 implementation with CM0 one.
 
   + Note
-    - osSignalSet returns an int32_t value which is a a status (osOK or osError) 
-      instead of the previous signal value as specified in cmsis_os template by ARM. 
+    - osSignalSet returns an int32_t value which is a a status (osOK or osError)
+      instead of the previous signal value as specified in cmsis_os template by ARM.
       This is mainly due to freeRTOS implementation, the return value will be aligned (with the cmsis os template by ARM) as soon as the freeRTOS next version will allow it.
 
-    - osThreadDef() macro is defined in the freeRTOS cmsis_os.h wrapper as follow : 
+    - osThreadDef() macro is defined in the freeRTOS cmsis_os.h wrapper as follow :
         osThreadDef(name, thread, priority, instances, stacksz)
       the macro osThreadDef() as defined in ARM cmsis_os.h is defined with 4 parameters :
-      name : name of the thread function. 
+      name : name of the thread function.
       priority : initial priority of the thread function.
       instances : number of possible thread instances.
       stacksz : stack size (in bytes) requirements for the thread function.
-      
+
     - osThreadDef as defined in the ARM template file cmsis_os.h assumes that the thread name is the same as the thread function name.
       where the freeRTOS implementation gives separate parameters for the thread name and the thread function name.
-      
+
       care must be taken when porting an application from/to another OS to/from freeRTOS cmsis_os regarding this macro.
-      
+
         the macro osThreadDef() as defined in ARM cmsis_os.h template is defined with 4 parameters :
            name : name of the thread function.
            priority : initial priority of the thread function.
            instances : number of possible thread instances.
            stacksz : stack size (in bytes) requirements for the thread function.
-        
+
         the macro osThreadDef() as defined in freeRTOS cmsis_os.h is defined with 5 parameters :
            name : name of the thread (used for debugging and trace).
            thread : name of the thread function
@@ -208,7 +252,7 @@
       - osThreadIsSuspended(): this function has been removed in version V1.2.0, it is now available gain.
          User can either use this function to check if a Thread is suspended either use function osThreadGetState,
          which is more generic, to check the exact state of a thread.
-                                               
+
       - osThreadList(): this function is now taking as argument a pointer to uint8_t instead of a pointer to int8_t.
          The change is made to remove a compilation warning.
 
@@ -241,7 +285,7 @@
 ### 07-November-2014 ###
 ========================
   + cmsis_os.h: modify the osThreadState enum to fix warning generated by ARMCC compiler
-  + task.c: add preprocessor compilation condition for prvTaskIsTaskSuspended() function 
+  + task.c: add preprocessor compilation condition for prvTaskIsTaskSuspended() function
             (it's build only when INCLUDE_vTaskSuspend option is enabled in FreeRTOSConfig.h file)
 
 
@@ -253,7 +297,7 @@
       - Additional wrapper APIs created for FreeRTOS
 
   + Important note:
-    When upgrading existing application code to use this last version, the following 
+    When upgrading existing application code to use this last version, the following
     update should be considered:
       - osThreadIsSuspended() is no longer public API in FreeRTOS and it should
         be replaced by the wrapping of eTaskGetState()
@@ -264,8 +308,8 @@
 ### 13-June-2014 ###
 ====================
   + FreeRTOSConfig_template.h: add this definition #define INCLUDE_xTaskGetSchedulerState 1
-                               to enable the use of xTaskGetSchedulerState() API in the 
-                               application code. 
+                               to enable the use of xTaskGetSchedulerState() API in the
+                               application code.
 
 
 ### 30-April-2014 ###
