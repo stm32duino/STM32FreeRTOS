@@ -707,7 +707,8 @@ static void vPortEnableVFP( void )
 		"								\n"
 		"	orr r1, r1, #( 0xf << 20 )	\n" /* Enable CP10 and CP11 coprocessors, then save back. */
 		"	str r1, [r0]				\n"
-		"	bx r14						"
+		"	bx r14						\n"
+		"   .ltorg 						\n" /* make sure the pool is placed here, so ldr doesn't generate a too long jump */		
 	);
 }
 /*-----------------------------------------------------------*/
