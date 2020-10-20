@@ -1,0 +1,37 @@
+name: STM32 FreeRTOS Continuous Integration
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*'
+      - '**.md'
+      - '**.txt'
+  pull_request:
+    paths-ignore:
+      - '*'
+      - '**.md'
+      - '**.txt'
+jobs:
+  lib_build:
+    runs-on: ubuntu-latest
+    name: Library compilation
+    steps:
+    # First of all, clone the repo using the checkout action.
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Compilation
+      id: Compile
+      uses: stm32duino/actions/compile-examples@master
+      with:
+        board-pattern: "NUCLEO_(F091RC|F103RB|F303RE|F429ZI|F767ZI|G071RB|G474RE|H743ZI2|L073RZ|L152RE|L476RG|WB55RG)"
+        libraries: "SD"
+        example-pattern: "fr[Blink|Fifo]"
+
+    # Use the output from the `Compile` step
+    - name: Compilation Errors
+      if: failure()
+      run: |
+        cat ${{ steps.Compile.outputs.compile-result }}
+        exit 1
