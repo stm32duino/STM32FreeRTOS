@@ -148,6 +148,8 @@ extern void SysTick_Handler     (void);
 /* FreeRTOS tick timer interrupt handler prototype */
 extern void xPortSysTickHandler (void);
 
+/* SysTick handler implementation done in the core and call osSystickHandler */
+#ifndef ARDUINO_ARCH_STM32
 /*
   SysTick handler implementation that also clears overflow flag.
 */
@@ -160,6 +162,7 @@ void SysTick_Handler (void) {
     xPortSysTickHandler();
   }
 }
+#endif /* ARDUINO_ARCH_STM32 */
 #endif /* SysTick */
 
 /*
@@ -171,7 +174,7 @@ __STATIC_INLINE void SVC_Setup (void) {
   /* and when its priority is lower or equal to BASEPRI, svc intruction */
   /* causes a Hard Fault.                                               */
 
- /* 
+ /*
   * the call below has introduced a regression compared to revious release
   * The issue was logged under:https://github.com/ARM-software/CMSIS-FreeRTOS/issues/35
   * until it is correctly fixed, the code below is commented
@@ -1469,7 +1472,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
           hSemaphore = xSemaphoreCreateCounting (max_count, initial_count);
         }
       }
-      
+
       #if (configQUEUE_REGISTRY_SIZE > 0)
       if (hSemaphore != NULL) {
         if (attr != NULL) {
