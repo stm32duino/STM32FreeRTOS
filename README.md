@@ -5,13 +5,15 @@ This is a port of FreeRTOS for STM32 as Arduino libraries.
 For more information about FreeRTOS, visit the [FreeRTOS Web Site](http://www.freertos.org/ "FreeRTOS").
 Also, See the very useful [Getting Started](http://www.freertos.org/FreeRTOS-quick-start-guide.html "Quick Start Guide") page.
 
-This library provides 2 FreeRTOS versions:
+This library provides 3 FreeRTOS versions:
  * [9.0.0](http://www.freertos.org/FreeRTOS-V9.html)
  * [10.0.1](http://www.freertos.org/FreeRTOS-V10.html)
+ * [10.2.1](http://www.freertos.org/FreeRTOS-V10.html)
 
 Both have been modified by ST (See st_readme.txt in FreeRTOS Source).
 
 These are the same provided with the [STM32Cube MCU Packages](http://www.st.com/en/embedded-software/stm32cube-mcu-packages.html)
+Or thanks to [STMicroelectronics GitHub organization](https://github.com/STMicroelectronics): [stm32_mw_freertos](https://github.com/STMicroelectronics/stm32_mw_freertos).
 
 ## Configuration
 
@@ -78,6 +80,24 @@ CMSIS-RTOSv2.
 | [Nucleo F429ZI](http://www.st.com/en/evaluation-tools/nucleo-f429zi.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
 | [STM32F746G-DISCOVERY](http://www.st.com/en/evaluation-tools/32f746gdiscovery.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
 | [Nucleo-G071RB](https://www.st.com/en/evaluation-tools/nucleo-g071rb.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
+| [Nucleo H743ZI](https://www.st.com/en/evaluation-tools/nucleo-h743zi.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo L053R8](http://www.st.com/en/evaluation-tools/nucleo-l053r8.html) | PASSED* | PASSED* | FAILED | PASSED | PASSED |
+| [Nucleo L152RE](http://www.st.com/en/evaluation-tools/nucleo-l152re.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [B-L475E-IOT01A](http://www.st.com/en/evaluation-tools/b-l475e-iot01a.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [P-Nucleo-WB55RG](https://www.st.com/en/evaluation-tools/p-nucleo-wb55.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
+
+\* PASSED with `configUSE_NEWLIB_REENTRANT` set to 0 due to small RAM.
+
+### STM32FreeRTOS v10.2.x
+| Board | AnalogRead_DigitalRead | frBlinkPrint | frLiuLayland | frBlink (CMSIS-RTOSv2) | Blinky (CMSIS-RTOSv2) |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| [Nucleo F091RC](http://www.st.com/en/evaluation-tools/nucleo-f091rc.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
+| [Nucleo F103RB](http://www.st.com/en/evaluation-tools/nucleo-f103rb.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo F303RE](http://www.st.com/en/evaluation-tools/nucleo-f303re.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo F411RE](http://www.st.com/en/evaluation-tools/nucleo-f411re.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [STM32F746G-DISCOVERY](http://www.st.com/en/evaluation-tools/32f746gdiscovery.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo-G071RB](https://www.st.com/en/evaluation-tools/nucleo-g071rb.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
+| [Nucleo-G474RE](https://www.st.com/en/evaluation-tools/nucleo-g474re.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
 | [Nucleo H743ZI](https://www.st.com/en/evaluation-tools/nucleo-h743zi.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
 | [Nucleo L053R8](http://www.st.com/en/evaluation-tools/nucleo-l053r8.html) | PASSED* | PASSED* | FAILED | PASSED | PASSED |
 | [Nucleo L152RE](http://www.st.com/en/evaluation-tools/nucleo-l152re.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
