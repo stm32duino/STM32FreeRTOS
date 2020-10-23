@@ -1,6 +1,6 @@
 {
     "name": "STM32duino FreeRTOS",
-    "version": "10.0.3",
+    "version": "10.2.1",
     "keywords": "rtos, timing, thread, task, mutex, semaphore",
     "description": "Real Time Operating System implemented for STM32",
     "repository": {

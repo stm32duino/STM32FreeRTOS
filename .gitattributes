@@ -1,0 +1,23 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+.editorconfig text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+
+*.c text eol=lf
+*.cpp text eol=lf
+*.css text eol=lf
+*.h text eol=lf
+*.html text eol=lf
+*.ino text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.MD text eol=lf
+*.properties text eol=lf
+*.readme text eol=lf
+*.txt text eol=lf
+*.url text eol=lf
+*.yml text eol=lf

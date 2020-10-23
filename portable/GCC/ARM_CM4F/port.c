@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.0.1
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V10.2.1
+ * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -277,7 +277,7 @@ static void prvPortStartFirstTask( void )
 					" isb					\n"
 					" svc 0					\n" /* System call to start first task. */
 					" nop					\n"
-					" .ltorg 				\n" /* make sure the pool is placed here, so ldr doesn't generate a too long jump */
+					" .ltorg 				\n" /* Ensure the pool is placed here, so ldr doesn't generate a too long jump */
 				);
 }
 /*-----------------------------------------------------------*/
@@ -709,7 +709,7 @@ static void vPortEnableVFP( void )
 		"	orr r1, r1, #( 0xf << 20 )	\n" /* Enable CP10 and CP11 coprocessors, then save back. */
 		"	str r1, [r0]				\n"
 		"	bx r14						\n"
-		"   .ltorg 						\n" /* make sure the pool is placed here, so ldr doesn't generate a too long jump */		
+		"	.ltorg 				\n" /* Ensure the pool is placed here, so ldr doesn't generate a too long jump */
 	);
 }
 /*-----------------------------------------------------------*/
