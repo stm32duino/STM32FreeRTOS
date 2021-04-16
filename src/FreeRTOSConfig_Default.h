@@ -44,7 +44,7 @@
 /* Begin custom definitions for STM32 */
 /* Define memory allocation implementations to use:
  * 1 to 5 for heap_[1-5].c
- * -1 for heap_useNewlib.c
+ * -1 for heap_useNewlib_ST.c
  * Default -1 see heap.c
  */
 /*#define configMEMMANG_HEAP_NB             3*/
@@ -82,7 +82,7 @@
 
 #define configMINIMAL_STACK_SIZE          ((uint16_t)128)
 #define configTOTAL_HEAP_SIZE             ((size_t)(15 * 1024))
-
+#define configISR_STACK_SIZE_WORDS        (0x100)
 #else
 extern char _end; /* Defined in the linker script */
 extern char _estack; /* Defined in the linker script */
@@ -97,7 +97,7 @@ extern char _Min_Stack_Size; /* Defined in the linker script */
  */
 #define configMINIMAL_STACK_SIZE          ((uint16_t)((uint32_t)&_Min_Stack_Size/8))
 #define configTOTAL_HEAP_SIZE             ((size_t)(&_estack - _Min_Stack_Size - &_end))
-
+#define configISR_STACK_SIZE_WORDS        ((uint32_t)&_Min_Stack_Size/4)
 #endif /* configUSE_CMSIS_RTOS_V2 */
 
 #define configUSE_PREEMPTION              1
