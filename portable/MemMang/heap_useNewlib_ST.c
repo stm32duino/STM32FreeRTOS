@@ -209,6 +209,7 @@ char * _sbrk(int incr) { return sbrk(incr); };
   static UBaseType_t malLock_uxSavedInterruptStatus;
 #endif
 void __malloc_lock(struct _reent *r)   {
+  (void)(r);
   #if defined(MALLOCS_INSIDE_ISRs)
     DRN_ENTER_CRITICAL_SECTION(malLock_uxSavedInterruptStatus);
   #else
@@ -218,6 +219,7 @@ void __malloc_lock(struct _reent *r)   {
   #endif
 };
 void __malloc_unlock(struct _reent *r) {
+  (void)(r);
   #if defined(MALLOCS_INSIDE_ISRs)
     DRN_EXIT_CRITICAL_SECTION(malLock_uxSavedInterruptStatus);
   #else
@@ -250,6 +252,7 @@ void __env_unlock()  { (void)xTaskResumeAll();  };
     return p;
   };
   void *__wrap__malloc_r(void *reent, size_t nbytes) {
+    (void)(reent);
     extern void * __real__malloc_r(size_t nbytes);
     if(!inside_malloc) {
       MallocCallCnt++;
