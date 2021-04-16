@@ -156,8 +156,8 @@ extern void xPortSysTickHandler (void);
   SysTick handler implementation that also clears overflow flag.
 */
 /* SysTick handler implementation done in the core and call osSystickHandler */
-#if !defined(ARDUINO_ARCH_STM32) && (USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION == 0)
-void SysTick_Handler (void) {
+#if (USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION == 0)
+void osSystickHandler (void) {
   /* Clear overflow flag */
   SysTick->CTRL;
 
@@ -166,7 +166,7 @@ void SysTick_Handler (void) {
     xPortSysTickHandler();
   }
 }
-#endif /* !ARDUINO_ARCH_STM32 && (USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION == 0)*/
+#endif /* USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION == 0*/
 #endif /* SysTick */
 
 /*

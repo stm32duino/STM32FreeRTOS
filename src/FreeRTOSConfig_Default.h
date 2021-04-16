@@ -215,15 +215,11 @@ header file. */
 
 /*
  * IMPORTANT:
- * osSystickHandler is called in the core SysTick_Handler definition and is defined as weak.
- * For CMSIS-RTOSv2: osSystickHandler is defined as xPortSysTickHandler
- * For CMSIS-RTOS: osSystickHandler is defined by the cmsis_os and xPortSysTickHandler
- * must not be defined to prevent overwriting SysTick_Handler
+ * SysTick_Handler() from stm32duino core is calling weak osSystickHandler().
+ * Both CMSIS-RTOSv2 and CMSIS-RTOS override osSystickHandler() 
+ * which is calling xPortSysTickHandler(), defined in respective CortexM-x port
  */
 /* #define xPortSysTickHandler SysTick_Handler */
-#if defined(configUSE_CMSIS_RTOS_V2) && (configUSE_CMSIS_RTOS_V2 == 1)
-#define xPortSysTickHandler osSystickHandler
-#endif
 
 #endif /* FREERTOS_CONFIG_DEFAULT_H */
 

@@ -333,7 +333,9 @@ void vPortExitCritical( void ) PRIVILEGED_FUNCTION;
 /**
  * @brief SysTick handler.
  */
-void SysTick_Handler( void ) PRIVILEGED_FUNCTION;
+/* Fix for STM32 core */
+/* void SysTick_Handler( void ) PRIVILEGED_FUNCTION; */
+void xPortSysTickHandler( void ) PRIVILEGED_FUNCTION;
 
 /**
  * @brief C part of SVC handler.
@@ -733,7 +735,9 @@ void vPortExitCritical( void ) /* PRIVILEGED_FUNCTION */
 }
 /*-----------------------------------------------------------*/
 
-void SysTick_Handler( void ) /* PRIVILEGED_FUNCTION */
+/* Fix for STM32 core */
+/* void SysTick_Handler( void ) */ /* PRIVILEGED_FUNCTION */
+void xPortSysTickHandler( void ) /* PRIVILEGED_FUNCTION */
 {
 uint32_t ulPreviousMask;
 

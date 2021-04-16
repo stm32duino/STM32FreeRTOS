@@ -111,6 +111,8 @@ CMSIS-RTOSv2.
 | --- | :---: | :---: | :---: | :---: | :---: |
 | [Nucleo F091RC (Cortex-M0)](http://www.st.com/en/evaluation-tools/nucleo-f091rc.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
 | [Nucleo G071RB (Cortex-M0+)](http://www.st.com/en/evaluation-tools/nucleo-g071rb.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
-| [Nucleo L476RG (Cortex-M3)](http://www.st.com/en/evaluation-tools/nucleo-l476rg.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo F103RB (Cortex-M3)](http://www.st.com/en/evaluation-tools/nucleo-f103rb.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
 | [Nucleo L476RG (Cortex-M4)](http://www.st.com/en/evaluation-tools/nucleo-l476rg.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
 | [Nucleo H743ZI (Cortex-M7)](https://www.st.com/en/evaluation-tools/nucleo-h743zi.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo L552ZE-Q (Cortex-M33)](https://www.st.com/en/evaluation-tools/nucleo-l552ze-q.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo U575ZI-Q (Cortex-M33)](https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
