@@ -79,26 +79,31 @@
  * which is not suitable for the new CMSIS-RTOS v2 priority range
  */
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
-
+/* Require to be a value as used in cmsis_os2.c as array size */
+#ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE          ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE             ((size_t)(15 * 1024))
-#define configISR_STACK_SIZE_WORDS        (0x100)
+#endif
 #else
+#define configMAX_PRIORITIES              (7)
+#endif /* configUSE_CMSIS_RTOS_V2 */
+
 extern char _end; /* Defined in the linker script */
 extern char _estack; /* Defined in the linker script */
 extern char _Min_Stack_Size; /* Defined in the linker script */
-
-#define configMAX_PRIORITIES              (7)
-
 /*
  * _Min_Stack_Size is often set to 0x400 in the linker script
  * Use it divided by 8 to set minmimal stack size of a task to 128 by default.
  * End user will have to properly configure those value depending to their needs.
  */
+#ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE          ((uint16_t)((uint32_t)&_Min_Stack_Size/8))
+#endif
+#ifndef configTOTAL_HEAP_SIZE
 #define configTOTAL_HEAP_SIZE             ((size_t)(&_estack - _Min_Stack_Size - &_end))
+#endif
+#ifndef configISR_STACK_SIZE_WORDS
 #define configISR_STACK_SIZE_WORDS        ((uint32_t)&_Min_Stack_Size/4)
-#endif /* configUSE_CMSIS_RTOS_V2 */
+#endif
 
 #define configUSE_PREEMPTION              1
 #define configUSE_IDLE_HOOK               1

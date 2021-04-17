@@ -15,6 +15,12 @@
 #define configMEMMANG_HEAP_NB      -1
 #endif
 
+#if configMEMMANG_HEAP_NB != -1
+/* Need to be redefined as a value as it used in some heap_*.c as array size */
+#undef configTOTAL_HEAP_SIZE
+#define configTOTAL_HEAP_SIZE             ((size_t)(15 * 1024))
+#endif
+
 #if (configMEMMANG_HEAP_NB == -1)
 #include "../portable/MemMang/heap_useNewlib_ST.c"
 #elif (configMEMMANG_HEAP_NB == 1)
