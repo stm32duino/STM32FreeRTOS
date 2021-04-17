@@ -34,7 +34,7 @@ By default, the `heap_useNewlib.c` is used. It can be changed thanks a define in
 ```
 /* Define memory allocation implementations to use:
  * 1 to 5 for heap_[1-5].c
- * -1 for heap_useNewlib.c
+ * -1 for heap_useNewlib_ST.c
  * Default -1 see heap.c
  */
 ```
