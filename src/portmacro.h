@@ -12,13 +12,13 @@
 #pragma GCC error  "no \"__CORTEX_M\" definition"
 #endif
 
-#if (__CORTEX_M == 0x00U)
+#if (__CORTEX_M == 0U)
 #include "../portable/GCC/ARM_CM0/portmacro.h"
 /* Stub for heap_useNewlib_ST */
 inline __attribute__(( always_inline )) static BaseType_t xPortIsInsideInterrupt( void ) { return pdFALSE; }
 #endif
 
-#if (__CORTEX_M == 0x03U)
+#if (__CORTEX_M == 3U)
 /* MPU not supported */
 #if 0 /*(__MPU_PRESENT == 1)*/
 #include "../portable/GCC/ARM_CM3_MPU/portmacro.h"
@@ -27,7 +27,7 @@ inline __attribute__(( always_inline )) static BaseType_t xPortIsInsideInterrupt
 #endif
 #endif
 
-#if (__CORTEX_M == 0x04U)
+#if (__CORTEX_M == 4U)
 /* MPU not supported */
 #if 0 /*(__MPU_PRESENT == 1)*/
 #include "../portable/GCC/ARM_CM4_MPU/portmacro.h"
@@ -36,13 +36,17 @@ inline __attribute__(( always_inline )) static BaseType_t xPortIsInsideInterrupt
 #endif
 #endif
 
-#if (__CORTEX_M == 0x07U)
+#if (__CORTEX_M == 7U)
 /* MPU not supported */
 #if 0 /*(__MPU_PRESENT == 1)*/
 #include "../portable/GCC/ARM_CM7_MPU/r0p1/portmacro.h"
 #else
 #include "../portable/GCC/ARM_CM7/r0p1/portmacro.h"
 #endif
+#endif
+
+#if (__CORTEX_M == 33U)
+#include "../portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h"
 #endif
 
 #endif //_PORTMACRO_H_
