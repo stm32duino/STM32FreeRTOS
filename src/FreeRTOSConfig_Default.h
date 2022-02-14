@@ -83,6 +83,11 @@
 #ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE          ((uint16_t)128)
 #endif
+
+#if !defined(CMSIS_device_header)
+/* CMSIS_device_header defined to stm32_def.h by default, which include <device.h> like stm32f1xx.h */
+#define CMSIS_device_header  "stm32_def.h"
+#endif /* CMSIS_device_header */
 #else
 #define configMAX_PRIORITIES              (7)
 #endif /* configUSE_CMSIS_RTOS_V2 */
@@ -157,6 +162,13 @@ to exclude the API function. */
 #define INCLUDE_xTaskGetSchedulerState 1
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
 #define INCLUDE_xTaskGetIdleTaskHandle 1
+
+#if defined(configUSE_CMSIS_RTOS_V2) && (configUSE_CMSIS_RTOS_V2 == 1)
+#define INCLUDE_xSemaphoreGetMutexHolder  1
+#define INCLUDE_eTaskGetState             1
+#define INCLUDE_xTimerPendFunctionCall    1
+#define INCLUDE_xTaskGetCurrentTaskHandle 1
+#endif
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS

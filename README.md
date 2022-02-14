@@ -105,3 +105,12 @@ CMSIS-RTOSv2.
 | [P-Nucleo-WB55RG](https://www.st.com/en/evaluation-tools/p-nucleo-wb55.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
 
 \* PASSED with `configUSE_NEWLIB_REENTRANT` set to 0 due to small RAM.
+
+### STM32FreeRTOS v10.3.1
+| Board | AnalogRead_DigitalRead | frBlinkPrint | frLiuLayland | frBlink (CMSIS-RTOSv2) | Blinky (CMSIS-RTOSv2) |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| [Nucleo F091RC (Cortex-M0)](http://www.st.com/en/evaluation-tools/nucleo-f091rc.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
+| [Nucleo G071RB (Cortex-M0+)](http://www.st.com/en/evaluation-tools/nucleo-g071rb.html) | PASSED | PASSED | FAILED | PASSED | PASSED |
+| [Nucleo L476RG (Cortex-M3)](http://www.st.com/en/evaluation-tools/nucleo-l476rg.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo L476RG (Cortex-M4)](http://www.st.com/en/evaluation-tools/nucleo-l476rg.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
+| [Nucleo H743ZI (Cortex-M7)](https://www.st.com/en/evaluation-tools/nucleo-h743zi.html) | PASSED | PASSED | PASSED | PASSED | PASSED |
