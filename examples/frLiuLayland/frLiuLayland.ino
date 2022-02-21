@@ -64,7 +64,7 @@ void calibrate() {
   uint32_t t = micros();
   burnCPU(1000);
   t = micros() - t;
-  cal = (TICK_USEC*1000*cal)/t;
+  cal = (TICK_USEC * 1000 * cal) / t;
 }
 //------------------------------------------------------------------------------
 // print helpers
@@ -85,7 +85,7 @@ void done(const char* msg, task_t* task, TickType_t now) {
   Serial.print("Task: ");
   Serial.flush();
   printTask(task);
-  while(1);
+  while (1);
 }
 //------------------------------------------------------------------------------
 // start tasks at 1000 ticks
@@ -123,7 +123,7 @@ void setup() {
   portBASE_TYPE s;  // task create status
 
   Serial.begin(9600);
-  while(!Serial) {}
+  while (!Serial) {}
   Serial.println("Rate Monotonic Scheduling Examples.");
   Serial.println("Cases 1 and 3 should fail");
   Serial.println("Cases 2 and 4 should succeed");
@@ -152,18 +152,18 @@ void setup() {
 
   uint32_t t = micros();
   burnCPU(1000);
-  Serial.println(micros() -t);
+  Serial.println(micros() - t);
   Serial.println("Starting tasks - period and CPU in ticks");
   Serial.println("Period,CPU,Priority");
   Serial.flush();
   for (int i = 0; i < n; i++) {
     printTask(&tasks[i]);
-    cpuUse += tasks[i].cpu/(float)tasks[i].period;
+    cpuUse += tasks[i].cpu / (float)tasks[i].period;
 
     s = xTaskCreate(task, NULL, 200, (void*)&tasks[i], tasks[i].priority, NULL);
     if (s != pdPASS) {
       printf("task create failed\n");
-      while(1);
+      while (1);
     }
   }
 
@@ -174,7 +174,7 @@ void setup() {
   // start tasks
   vTaskStartScheduler();
   Serial.println("Scheduler failed");
-  while(1);
+  while (1);
 }
 //------------------------------------------------------------------------------
 // WARNING idle loop has a very small stack (configMINIMAL_STACK_SIZE)
