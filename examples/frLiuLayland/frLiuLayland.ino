@@ -68,12 +68,14 @@ void calibrate() {
 }
 //------------------------------------------------------------------------------
 // print helpers
+// On Cortex-M0 and Cortex-M0+, all IT are disabled between xTaskCreate() and vTaskStartScheduler().
+// So it is not possible to use IT inbetween, like Serial.print() ...
+// This is the reason why, in example "frLiyLayland", between xTaskCreate() and vTaskStartScheduler(),
+// we use direct printf(), which will access directly USART without interrupt
 void printTask(task_t* task) {
-    Serial.print(task->period);
-    Serial.write(',');
-    Serial.print(task->cpu);
-    Serial.write(',');
-    Serial.println(task->priority);
+  printf("%u, ", task->period);
+  printf("%u, ", task->cpu);
+  printf("%u\r\n", task->priority);
 }
 void done(const char* msg, task_t* task, TickType_t now) {
   vTaskSuspendAll();
@@ -81,6 +83,7 @@ void done(const char* msg, task_t* task, TickType_t now) {
   Serial.print("Tick: ");
   Serial.println(now);
   Serial.print("Task: ");
+  Serial.flush();
   printTask(task);
   while(1);
 }
@@ -152,21 +155,22 @@ void setup() {
   Serial.println(micros() -t);
   Serial.println("Starting tasks - period and CPU in ticks");
   Serial.println("Period,CPU,Priority");
+  Serial.flush();
   for (int i = 0; i < n; i++) {
     printTask(&tasks[i]);
     cpuUse += tasks[i].cpu/(float)tasks[i].period;
 
     s = xTaskCreate(task, NULL, 200, (void*)&tasks[i], tasks[i].priority, NULL);
     if (s != pdPASS) {
-      Serial.println("task create failed");
+      printf("task create failed\n");
       while(1);
     }
   }
-  Serial.print("CPU use %: ");
-  Serial.println(cpuUse*100);
-  Serial.print("Liu and Layland bound %: ");
-  Serial.println(LiuLayland[n - 1]);
 
+  char CPU[10];
+  char bound[10];
+  printf("CPU use %%: %s\r\n", dtostrf(cpuUse*100, 6,  2, CPU));
+  printf("Liu and Layland bound %%: %s\r\n", dtostrf(LiuLayland[n - 1], 6,  2, bound));
   // start tasks
   vTaskStartScheduler();
   Serial.println("Scheduler failed");
