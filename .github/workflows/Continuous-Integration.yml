@@ -2,7 +2,7 @@ name: STM32 FreeRTOS Continuous Integration
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - '*'
       - '**.md'
@@ -19,13 +19,13 @@ jobs:
     steps:
     # First of all, clone the repo using the checkout action.
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@main
 
     - name: Compilation
       id: Compile
-      uses: stm32duino/actions/compile-examples@master
+      uses: stm32duino/actions/compile-examples@main
       with:
-        board-pattern: "NUCLEO_(F091RC|F103RB|F303RE|F429ZI|F767ZI|G071RB|G474RE|H743ZI2|L073RZ|L152RE|L476RG|WB55RG)"
+        board-pattern: "NUCLEO_(F091RC|F103RB|F303RE|F429ZI|F767ZI|G071RB|G474RE|H743ZI2|L073RZ|L152RE|L476RG|L552ZE|U575ZI|WB55RG|WL55JC1)"
         libraries: "SD"
         example-pattern: "fr[Blink|Fifo]"
 
