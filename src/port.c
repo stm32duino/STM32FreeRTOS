@@ -23,11 +23,16 @@
 #endif
 
 #if (__CORTEX_M == 4U)
+#if (__FPU_PRESENT == 0)
+/* Fallback to CM3 port as there is no FPU */
+#include "../portable/GCC/ARM_CM3/port.c"
+#else
 /* MPU not supported */
 #if 0 /*(__MPU_PRESENT == 1)*/
 #include "../portable/GCC/ARM_CM4_MPU/port.c"
 #else
 #include "../portable/GCC/ARM_CM4F/port.c"
+#endif
 #endif
 #endif
 

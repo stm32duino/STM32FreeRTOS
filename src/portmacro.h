@@ -28,11 +28,16 @@ inline __attribute__(( always_inline )) static BaseType_t xPortIsInsideInterrupt
 #endif
 
 #if (__CORTEX_M == 4U)
+#if (__FPU_PRESENT == 0)
+/* Fallback to CM3 port as there is no FPU */
+#include "../portable/GCC/ARM_CM3/portmacro.h"
+#else
 /* MPU not supported */
 #if 0 /*(__MPU_PRESENT == 1)*/
 #include "../portable/GCC/ARM_CM4_MPU/portmacro.h"
 #else
 #include "../portable/GCC/ARM_CM4F/portmacro.h"
+#endif
 #endif
 #endif
 
