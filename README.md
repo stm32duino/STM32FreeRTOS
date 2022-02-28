@@ -5,14 +5,16 @@ This is a port of FreeRTOS for STM32 as Arduino libraries.
 For more information about FreeRTOS, visit the [FreeRTOS Web Site](http://www.freertos.org/ "FreeRTOS").
 Also, See the very useful [Getting Started](http://www.freertos.org/FreeRTOS-quick-start-guide.html "Quick Start Guide") page.
 
-This library provides 3 FreeRTOS versions:
- * [9.0.0](http://www.freertos.org/FreeRTOS-V9.html)
- * [10.0.1](http://www.freertos.org/FreeRTOS-V10.html)
- * [10.2.1](http://www.freertos.org/FreeRTOS-V10.html)
+This library provides 2 FreeRTOS versions:
+ * [9.x](http://www.freertos.org/FreeRTOS-V9.html)
+ * [10.x](http://www.freertos.org/FreeRTOS-V10.html):
+   * [10.0.1](https://github.com/STMicroelectronics/stm32_mw_freertos/releases/tag/v10.0.1) 
+   * [10.2.1](https://github.com/STMicroelectronics/stm32_mw_freertos/releases/tag/v10.2.1)
+   * [10.3.1](https://github.com/STMicroelectronics/stm32_mw_freertos/releases/tag/v10.3.1)
 
-Both have been modified by ST (See st_readme.txt in FreeRTOS Source).
+Each have been modified by ST (See st_readme.txt in FreeRTOS Source).
 
-These are the same provided with the [STM32Cube MCU Packages](http://www.st.com/en/embedded-software/stm32cube-mcu-packages.html)
+These are the same provided with the [STM32Cube MCU Packages](http://www.st.com/en/embedded-software/stm32cube-mcu-packages.html).
 Or thanks to [STMicroelectronics GitHub organization](https://github.com/STMicroelectronics): [stm32_mw_freertos](https://github.com/STMicroelectronics/stm32_mw_freertos).
 
 ## Configuration
