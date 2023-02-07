@@ -73,7 +73,7 @@
 #include <stddef.h>
 
 #include "newlib.h"
-#if ((__NEWLIB__ == 2) && (__NEWLIB_MINOR__ < 5)) ||((__NEWLIB__ == 3) && (__NEWLIB_MINOR__ > 3))
+#if ((__NEWLIB__ == 2) && (__NEWLIB_MINOR__ < 5)) || ((__NEWLIB__ == 3) && (__NEWLIB_MINOR__ > 3)) || (__NEWLIB__ > 3)
   #warning "This wrapper was verified for newlib versions 2.5 - 3.3; please ensure newlib's external requirements for malloc-family are unchanged!"
 #endif
 
