@@ -64,7 +64,7 @@ void assertBlink() {
 	FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
 	to query the size of free heap space that remains (although it does not
 	provide information on how the remaining heap might be fragmented). */
-void vApplicationMallocFailedHook() {
+void __attribute__((weak)) vApplicationMallocFailedHook() {
   errorBlink(2);
 }
 #endif /* configUSE_MALLOC_FAILED_HOOK == 1 */
@@ -95,7 +95,7 @@ void  __attribute__((weak)) vApplicationIdleHook( void ) {
   \param[in] pxTask Task handle
   \param[in] pcTaskName Task name
   */
-void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName) {
+void __attribute__((weak)) vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName) {
   (void) pcTaskName;
   (void) pxTask;
   errorBlink(3);
