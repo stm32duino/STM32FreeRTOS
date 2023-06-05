@@ -200,7 +200,7 @@ PRIORITY THAN THIS! (higher priorities are lower numeric values. */
 /* Interrupt priorities used by the kernel port layer itself.  These are generic
 to all Cortex-M ports, and do not rely on any particular library functions. */
 /* Warning in case of Ethernet, this prio (used by systick) should be higher (lower value) than ethernet Timer */
-#define configKERNEL_INTERRUPT_PRIORITY   14
+#define configKERNEL_INTERRUPT_PRIORITY   ( 14 << (8 - configPRIO_BITS) )
 
 /* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
 See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
