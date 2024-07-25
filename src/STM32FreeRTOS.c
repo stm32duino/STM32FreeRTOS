@@ -50,13 +50,12 @@ void assertBlink() {
   errorBlink(1);
 }
 //------------------------------------------------------------------------------
-#if ( configUSE_MALLOC_FAILED_HOOK == 1 )
+#if ( ( configUSE_MALLOC_FAILED_HOOK == 1 ) && ( configUSE_MALLOC_FAILED_HOOK_BLINK == 1 ) )
 	/** vApplicationMallocFailedHook()
-   Blink two short pulses if malloc fails.
-
-	will only be called if
-	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h.  It is a hook
-	function that will get called if a call to pvPortMalloc() fails.
+  Blink two short pulses if malloc fails. Itwill only be called if
+	configUSE_MALLOC_FAILED_HOOK is set to 1 and
+  configUSE_MALLOC_FAILED_HOOK_BLINK defined in FreeRTOSConfig.h.
+  It is a hook function that will get called if a call to pvPortMalloc() fails.
 	pvPortMalloc() is called internally by the kernel whenever a task, queue,
 	timer or semaphore is created.  It is also called by various parts of the
 	demo application.  If heap_1.c or heap_2.c are used, then the size of the
@@ -87,11 +86,12 @@ void  __attribute__((weak)) vApplicationIdleHook( void ) {
 #endif /* configUSE_IDLE_HOOK == 1 */
 
 /*-----------------------------------------------------------*/
-#if ( configCHECK_FOR_STACK_OVERFLOW >= 1 )
+#if ( ( configCHECK_FOR_STACK_OVERFLOW >= 1 ) && ( configCHECK_FOR_STACK_OVERFLOW_BLINK == 1 ) )
 	/**  Blink three short pulses if stack overflow is detected.
 	Run time stack overflow checking is performed if
-	configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
-	function is called if a stack overflow is detected.
+	configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2 and
+  configCHECK_FOR_STACK_OVERFLOW_BLINK is defined.
+  This hook	function is called if a stack overflow is detected.
   \param[in] pxTask Task handle
   \param[in] pcTaskName Task name
   */
