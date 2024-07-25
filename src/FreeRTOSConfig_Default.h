@@ -46,7 +46,16 @@
  * -1 for heap_useNewlib_ST.c
  * Default -1 see heap.c
  */
-/*#define configMEMMANG_HEAP_NB             3*/
+/* #define configMEMMANG_HEAP_NB             3 */
+
+/* Set to 1 to use default blink hook if configUSE_MALLOC_FAILED_HOOK is 1 */
+#ifndef configUSE_MALLOC_FAILED_HOOK_BLINK
+  #define configUSE_MALLOC_FAILED_HOOK_BLINK  0
+#endif
+/* Set to 1 to used default blink if configCHECK_FOR_STACK_OVERFLOW is 1 or 2 */
+#ifndef configCHECK_FOR_STACK_OVERFLOW_BLINK
+  #define configCHECK_FOR_STACK_OVERFLOW_BLINK 0
+#endif
 
 /* configUSE_CMSIS_RTOS_V2 has to be defined and set to 1 to use CMSIS-RTOSv2 */
 /*#define configUSE_CMSIS_RTOS_V2           1*/
@@ -218,7 +227,7 @@ header file. */
 /*
  * IMPORTANT:
  * SysTick_Handler() from stm32duino core is calling weak osSystickHandler().
- * Both CMSIS-RTOSv2 and CMSIS-RTOS override osSystickHandler() 
+ * Both CMSIS-RTOSv2 and CMSIS-RTOS override osSystickHandler()
  * which is calling xPortSysTickHandler(), defined in respective CortexM-x port
  */
 /* #define xPortSysTickHandler SysTick_Handler */
