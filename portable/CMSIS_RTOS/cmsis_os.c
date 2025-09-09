@@ -258,6 +258,7 @@ osStatus osThreadTerminate (osThreadId thread_id)
   vTaskDelete(thread_id);
   return osOK;
 #else
+  (void) thread_id;
   return osErrorOS;
 #endif
 }
@@ -287,6 +288,8 @@ osStatus osThreadSetPriority (osThreadId thread_id, osPriority priority)
   vTaskPrioritySet(thread_id, makeFreeRtosPriority(priority));
   return osOK;
 #else
+  (void) thread_id;
+  (void) priority;
   return osErrorOS;
 #endif
 }
@@ -309,6 +312,7 @@ osPriority osThreadGetPriority (osThreadId thread_id)
     return makeCmsisPriority(uxTaskPriorityGet(thread_id));
   }
 #else
+  (void) thread_id;
   return osPriorityError;
 #endif
 }
@@ -390,6 +394,9 @@ osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void
 #endif
 
 #else 
+  (void) timer_def;
+  (void) type;
+  (void) argument;
 	return NULL;
 #endif
 }
@@ -429,6 +436,8 @@ osStatus osTimerStart (osTimerId timer_id, uint32_t millisec)
   }
 
 #else 
+  (void) timer_id;
+  (void) millisec;
   result = osErrorOS;
 #endif
   return result;
@@ -458,6 +467,7 @@ osStatus osTimerStop (osTimerId timer_id)
     }
   }
 #else 
+  (void) timer_id;
   result = osErrorOS;
 #endif 
   return result;
@@ -485,6 +495,7 @@ osStatus result = osOK;
   } 
     
 #else 
+  (void) timer_id;
   result = osErrorOS;
 #endif 
  
@@ -609,9 +620,11 @@ osMutexId osMutexCreate (const osMutexDef_t *mutex_def)
 #elif ( configSUPPORT_STATIC_ALLOCATION == 1 )
   return xSemaphoreCreateMutexStatic( mutex_def->controlblock );
 #else  
-    return xSemaphoreCreateMutex(); 
+    (void) mutex_def;
+    return xSemaphoreCreateMutex();
 #endif
 #else
+  (void) mutex_def;
   return NULL;
 #endif
 }
@@ -753,6 +766,7 @@ osSemaphoreId osSemaphoreCreate (const osSemaphoreDef_t *semaphore_def, int32_t 
 #endif    
   }
 #else  // configSUPPORT_STATIC_ALLOCATION == 0  && configSUPPORT_DYNAMIC_ALLOCATION == 1
+  (void) semaphore_def;
   osSemaphoreId sema;
  
   if (count == 1) {
@@ -923,6 +937,7 @@ osPoolId osPoolCreate (const osPoolDef_t *pool_def)
   return thePool;
  
 #else
+  (void) pool_def;
   return NULL;
 #endif
 }
@@ -1200,6 +1215,8 @@ osMailQId osMailCreate (const osMailQDef_t *queue_def, osThreadId thread_id)
   
   return *(queue_def->cb);
 #else
+  (void) queue_def;
+  (void) thread_id;
   return NULL;
 #endif
 }
@@ -1436,6 +1453,7 @@ osStatus osThreadSuspend (osThreadId thread_id)
   
   return osOK;
 #else
+  (void) thread_id;
   return osErrorResource;
 #endif
 }
@@ -1461,6 +1479,7 @@ osStatus osThreadResume (osThreadId thread_id)
   }
   return osOK;
 #else
+  (void) thread_id;
   return osErrorResource;
 #endif
 }
@@ -1542,6 +1561,8 @@ osStatus osThreadList (uint8_t *buffer)
 {
 #if ( ( configUSE_TRACE_FACILITY == 1 ) && ( configUSE_STATS_FORMATTING_FUNCTIONS == 1 ) )
   vTaskList((char *)buffer);
+#else
+  (void) buffer;
 #endif
   return osOK;
 }
@@ -1649,9 +1670,11 @@ osMutexId osRecursiveMutexCreate (const osMutexDef_t *mutex_def)
 #elif ( configSUPPORT_STATIC_ALLOCATION == 1 )
   return xSemaphoreCreateRecursiveMutexStatic( mutex_def->controlblock );
 #else 
+  (void) mutex_def;
   return xSemaphoreCreateRecursiveMutex();
 #endif
 #else
+  (void) mutex_def;
   return NULL;
 #endif	
 }
@@ -1672,6 +1695,7 @@ osStatus osRecursiveMutexRelease (osMutexId mutex_id)
   }
   return result;
 #else
+  (void) mutex_id;
 	return osErrorResource;
 #endif
 }
@@ -1712,6 +1736,8 @@ osStatus osRecursiveMutexWait (osMutexId mutex_id, uint32_t millisec)
   }
   return osOK;
 #else
+  (void) mutex_id;
+  (void) millisec;
 	return osErrorResource;
 #endif
 }
